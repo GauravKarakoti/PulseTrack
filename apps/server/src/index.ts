@@ -11,8 +11,6 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// TODO: Initialize Drizzle connection pool
-
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', service: 'PulseTrack API' });
 });

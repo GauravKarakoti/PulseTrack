@@ -32,7 +32,7 @@ PulseTrack is an open-source, cross-platform personal productivity and habit-tra
 
 1. **Clone the repository**
    ```bash
-   git clone [https://github.com/GauravKarakoti/PulseTrack.git](https://github.com/yourusername/PulseTrack.git)
+   git clone [https://github.com/GauravKarakoti/PulseTrack.git](https://github.com/GauravKarakoti/PulseTrack.git)
    cd PulseTrack
    ```
 2. Install dependencies
