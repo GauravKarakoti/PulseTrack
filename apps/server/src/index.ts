@@ -1,9 +1,8 @@
+// Must be the first import: modules below (e.g. db) read env vars at import time.
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import syncRoutes from './routes/sync.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
