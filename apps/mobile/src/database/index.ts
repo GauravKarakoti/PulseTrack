@@ -1,21 +1,27 @@
-import { appSchema, tableSchema } from '@nozbe/watermelondb';
+import { Database } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 
-// TODO: Define the offline database schema. 
-// Note: This must logically mirror the Drizzle schema on the backend.
+// The offline schema lives in ./schema.ts and mirrors the Drizzle schema on the backend.
+import schema from './schema';
+import Routine from './models/Routine';
+import Habit from './models/Habit';
+import Completion from './models/Completion';
 
-export default appSchema({
-  version: 1,
-  tables: [
-    tableSchema({
-      name: 'habits',
-      columns: [
-        // WatermelonDB automatically adds 'id'
-        { name: 'name', type: 'string' },
-        // TODO: Add columns for frequency, color, streak data, etc.
-        { name: 'created_at', type: 'number' }, 
-        { name: 'updated_at', type: 'number' },
-      ],
-    }),
-    // TODO: Add tables for routines, completions, and logs
-  ],
+const adapter = new SQLiteAdapter({
+  schema,
+  // JSI is much faster, but needs WatermelonDB's native module, so the app must
+  // run as a development build (Expo Go does not include it).
+  jsi: true,
+  onSetUpError: (error) => {
+    // The local database failed to open (e.g. a schema change without a migration).
+    console.error('Failed to set up the local database', error);
+  },
 });
+
+export const database = new Database({
+  adapter,
+  modelClasses: [Routine, Habit, Completion],
+});
+
+export { Routine, Habit, Completion };
+export default schema;
